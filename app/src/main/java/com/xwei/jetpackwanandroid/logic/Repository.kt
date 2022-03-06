@@ -1,8 +1,16 @@
 package com.xwei.jetpackwanandroid.logic
 
+import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.xwei.jetpackwanandroid.WanApplication
+import com.xwei.jetpackwanandroid.appContext
+import com.xwei.jetpackwanandroid.logic.dao.AppDatabase
+import com.xwei.jetpackwanandroid.logic.dao.ArticleDao
+import com.xwei.jetpackwanandroid.logic.model.DataX
 import com.xwei.jetpackwanandroid.logic.network.WanAndroidNetwork
 import kotlinx.coroutines.Dispatchers
+import kotlin.concurrent.thread
 
 /**
  * @desc 仓库层的统一封装入口
@@ -10,6 +18,26 @@ import kotlinx.coroutines.Dispatchers
  * @date  2022/3/1
  **/
 object Repository {
+
+    private var articleDao: ArticleDao? = null
+
+    init {
+        /**
+         *  初始化数据库、表
+         */
+        val database = AppDatabase.getDatabase(appContext)
+        this.articleDao = database.articleDao()
+    }
+
+    fun insertArticles(articles: List<DataX>) {
+        thread {
+            articleDao?.inserArticle(articles)
+        }
+    }
+
+    fun getAllArticlesLive(): LiveData<List<DataX>>? {
+        return articleDao?.getAllArticles()
+    }
 
     /**
      *  liveData() 函数是 lifecycle-livedata-ktx 库提供的一个非常强大且好用的功能，它可以自动构建并返回

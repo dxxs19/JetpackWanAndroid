@@ -47,6 +47,11 @@ class ArticleFragment : BaseFragment() {
         binding.swipeRefresh.setOnRefreshListener {
             binding.swipeRefresh.postDelayed({ binding.swipeRefresh.isRefreshing = false }, 2000)
         }
+        viewModel.dbArticles?.observe(this) {
+            it.forEach { item ->
+                LogUtil.e(TAG, item.toString())
+            }
+        }
     }
 
     override fun initSetup() {
