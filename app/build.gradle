@@ -1,0 +1,97 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
+
+android {
+    compileSdkVersion CompileSdkVersion
+    buildToolsVersion BuildToolsVersion
+
+    defaultConfig {
+        applicationId "com.xwei.jetpackwanandroid"
+        minSdkVersion MinSdkVersion
+        targetSdkVersion TargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        dataBinding true
+        // minSdkVersion >= 21
+//        compose true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation kotlins.kotlin_stdlib
+    implementation androidx.core_ktx
+    implementation androidx.appcompat
+    implementation androidx.constraintlayout
+    implementation androidx.swiperefreshlayout
+//    testImplementation roots.junit
+//    androidTestImplementation androidx.testJunit
+//    androidTestImplementation androidx.testEspresso
+
+    // Lifecycle
+    implementation jetpack.lifecycle_livedata
+    implementation jetpack.lifecycle_extensions
+    // ViewModel
+    implementation jetpack.lifecycle_viewmodel
+    // Navigation
+    implementation jetpack.navigation_fragment
+    implementation jetpack.navigation_ui
+    // Feature module Support
+    implementation jetpack.navigation_dynamic_features
+    // Testing Navigation
+//    androidTestImplementation jetpack.navigation_testing
+    // Jetpack Compose Integration
+//    implementation jetpack.navigation_compose
+    // Room
+    implementation jetpack.room_runtime
+    implementation jetpack.room
+    kapt jetpack.room_compiler
+    androidTestImplementation jetpack.room_test
+    // Paging
+    implementation jetpack.paging_runtime
+
+    // material
+    implementation roots.material
+    // 协程
+    implementation kotlins.kotlinx_coroutines_core
+    implementation kotlins.kotlinx_coroutines_android
+    // Retrofit
+    implementation network.retrofit2
+    implementation network.converter_gson
+
+    implementation kotlins.kotlin_reflect
+
+    // 分包
+    implementation roots.multidex
+
+    implementation project(':libs:permissionlib')
+    implementation project(':libs:rx')
+    implementation project(':libs:utils')
+    implementation project(':libs:player')
+    implementation project(':libs:customView')
+}

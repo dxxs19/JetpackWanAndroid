@@ -1,0 +1,6 @@
+include ':app'
+rootProject.name = "JetpackWanAndroid"
+
+include ':app', ":libs:permissionlib", ":libs:rx", ":libs:utils"
+include ':libs:customView'
+include ':libs:player'
