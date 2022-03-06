@@ -17,6 +17,12 @@ android {
 
         multiDexEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]//指定数据库schema导出的位置
+            }
+        }
     }
 
     buildTypes {
@@ -49,9 +55,9 @@ dependencies {
     implementation androidx.appcompat
     implementation androidx.constraintlayout
     implementation androidx.swiperefreshlayout
-//    testImplementation roots.junit
-//    androidTestImplementation androidx.testJunit
-//    androidTestImplementation androidx.testEspresso
+    testImplementation roots.junit
+    androidTestImplementation androidx.testJunit
+    androidTestImplementation androidx.testEspresso
 
     // Lifecycle
     implementation jetpack.lifecycle_livedata
@@ -72,6 +78,7 @@ dependencies {
     implementation jetpack.room
     kapt jetpack.room_compiler
     androidTestImplementation jetpack.room_test
+    implementation jetpack.room_paging
     // Paging
     implementation jetpack.paging_runtime
 
